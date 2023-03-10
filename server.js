@@ -1,11 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
+const path = require("path");
+const { fileURLToPath } = require("url");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const errorHandler = require("./middelwares/errorMiddleware");
-import path from "path";
-import { fileURLToPath } from "url";
 
 //routes path
 const authRoutes = require("./routes/authRoutes");
@@ -27,7 +26,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "./client/build")));
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 8080;
