@@ -1,7 +1,7 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
-const { fileURLToPath } = require("url");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const errorHandler = require("./middelwares/errorMiddleware");
@@ -9,9 +9,7 @@ const errorHandler = require("./middelwares/errorMiddleware");
 //routes path
 const authRoutes = require("./routes/authRoutes");
 
-const __filename = fileURLToPath(import.meta.url);
-
-const __dirname = path.dirname(__filename);
+__dirname = path.resolve();
 
 //dotenv
 dotenv.config();
@@ -25,7 +23,8 @@ const app = express();
 //middlewares
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "./client/build")));
+app.use(express.static(path.join(__dirname, "client", "build")));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 8080;
